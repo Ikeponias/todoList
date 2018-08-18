@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="base_header(title)">
+<title th:text="${title==null}? 'TodoList' : ${title}">TodoList</title>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/base.css}">
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/todo.css}">
+<script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" th:src="@{/javascript/base.js}"></script>
+</head>
+<header th:fragment="header" class="my-header">
+	<div>TodoList Header</div>
+</header>
+<footer th:fragment="footer" class="my-footer">
+	<div>TodoList Footer</div>
+</footer>
+</html>

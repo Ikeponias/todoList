@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: base_header('Todo Index')">
+</head>
+<body>
+	<div th:replace="layout::header"></div>
+	<h1>Todo:Index</h1>
+	<table class="list">
+		<tr>
+			<th>check</th>
+			<th>ID</th>
+			<th>TODO</th>
+			<th>DONE?</th>
+			<th>削除</th>
+		</tr>
+		<tr th:each="todo:${todos}">
+			<td>
+				<form th:action="|${link_to_update}/${todo.id}|" th:method="put" th:object="${todo}">
+					<input type="submit" class="checkbox-submit" value="DONE!" />
+				</form>
+			</td>
+			<td th:text="${todo.id}">ID</td>
+			<td><a th:href="|${link_to_show}/${todo.id}|" th:text="${todo.task}">TODO</a></td>
+			<td th:text="${todo.done}">DONE?</td>
+			<td><form th:action="|${link_to_destroy}/${todo.id}|" th:method="delete">
+                <input type="submit" value="削除" /></form></td>
+		</tr>
+	</table>
+	<div><a th:href="${link_to_new}">新規作成</a></div>
+	<div th:replace="layout::footer"></div>
+</body>
+</html>

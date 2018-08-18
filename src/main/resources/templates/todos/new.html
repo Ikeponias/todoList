@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: base_header('Todo New')">
+</head>
+<body>
+	<div th:replace="layout::header"></div>
+	<h1>Todo:new</h1>
+	<form action="#" th:action="@{/todos/create}" th:object="${todoForm}"
+		method="post">
+		<p>
+			Task: <input type="text" th:field="*{task}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+	<div th:replace="layout::footer"></div>
+</body>
+</html>
