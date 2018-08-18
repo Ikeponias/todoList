@@ -5,14 +5,14 @@
 <body>
 	<div th:replace="layout::header"></div>
 	<h1>Todo:new</h1>
-	<form action="#" th:action="@{/todos/create}" th:object="${todoForm}"
+	<form action="#" th:action="|${link_to_create}|" th:object="${todoForm}"
 		method="post">
-		<p>
+		<div>
 			Task: <input type="text" th:field="*{task}" />
-		</p>
-		<p>
+		</div>
+		<div>
 			<input type="submit" value="Submit" />
-		</p>
+		</div>
 	</form>
 	<div th:replace="layout::footer"></div>
 </body>
