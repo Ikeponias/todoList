@@ -12,52 +12,53 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ikeda.todolist.Constants.RoutingURL;
 import com.ikeda.todolist.Models.Todo;
 import com.ikeda.todolist.Services.TodoService;
 
 @Controller
 @EnableAutoConfiguration
-@RequestMapping("/todos")
+@RequestMapping(RoutingURL.TODOS)
 public class TodoController {
 	@Autowired
 	TodoService todoService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = RoutingURL.INDEX, method = RequestMethod.GET)
 	public String index(Model model) {
 		List<Todo> todos = todoService.findAll();
 		model.addAttribute("todos", todos);
-		model.addAttribute("link_to_show", "/todos/show");
-		model.addAttribute("link_to_new", "/todos/new");
-		model.addAttribute("link_to_update", "/todos/update");
-		model.addAttribute("link_to_destroy", "/todos/destroy");
+		model.addAttribute("link_to_show", RoutingURL.TODOS_SHOW);
+		model.addAttribute("link_to_new", RoutingURL.TODOS_NEW);
+		model.addAttribute("link_to_update", RoutingURL.TODOS_UPDATE);
+		model.addAttribute("link_to_destroy", RoutingURL.TODOS_DESTROY);
 
 		return "todos/index";
 	}
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = RoutingURL.SHOW + "/{id}", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
 		model.addAttribute("todo", todo);
-		model.addAttribute("link_to_child_new", "/todos/new");
+		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
 
 		return "todos/show";
 	}
 
-	@RequestMapping(value = { "/new", "/new/{parent_id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { RoutingURL.NEW, RoutingURL.NEW + "/{parent_id}" }, method = RequestMethod.GET)
 	public String newTodo(Model model, @PathVariable(name = "parent_id", required = false) Optional<Long> parent_id) {
 		Todo todo = new Todo();
 
 		model.addAttribute("todoForm", todo);
 		if (parent_id.isPresent()) {
-			model.addAttribute("link_to_create", "/todos/create" + "/" + parent_id.get().toString());
+			model.addAttribute("link_to_create", RoutingURL.TODOS_CREATE + "/" + parent_id.get().toString());
 		} else {
-			model.addAttribute("link_to_create", "/todos/create");
+			model.addAttribute("link_to_create", RoutingURL.TODOS_CREATE);
 		}
 
 		return "todos/new";
 	}
 
-	@RequestMapping(value = { "/create", "/create/{parent_id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { RoutingURL.CREATE, RoutingURL.CREATE + "/{parent_id}" }, method = RequestMethod.POST)
 	public String create(@ModelAttribute Todo todoForm,
 			@PathVariable(name = "parent_id", required = false) Optional<Long> parent_id) {
 
@@ -68,19 +69,19 @@ public class TodoController {
 
 		todoService.save(todoForm);
 
-		return "redirect:/todos";
+		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = RoutingURL.UPDATE + "/{id}", method = RequestMethod.PUT)
 	public String update(@PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
 		todo.switchDone();
 		todoService.save(todo);
 
-		return "redirect:/todos";
+		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}
 
-	@RequestMapping(value = "/destroy/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = RoutingURL.DESTROY + "/{id}", method = RequestMethod.DELETE)
 	public String destroy(@PathVariable("id") Long id) {
 		List<Todo> childrenTodo = todoService.find(id).get().getChildren();
 		if (childrenTodo != null) {
@@ -88,6 +89,6 @@ public class TodoController {
 		}
 		todoService.delete(id);
 
-		return "redirect:/todos";
+		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}
 }
