@@ -39,6 +39,7 @@ public class TodoController {
 	public String show(Model model, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
 		model.addAttribute("todo", todo);
+		model.addAttribute("children_todo", todo.getChildren());
 		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
 
 		return "todos/show";

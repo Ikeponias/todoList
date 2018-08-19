@@ -1,24 +1,12 @@
-.my-header{
-	height: 100px;
-	width: 100%;
-	background-color: #47B39D;
-	color: white;
-  	text-align: center;
-  	font-size: 50px;
+table {
+	border-collapse: collapse; 
+	border: solid thin;
 }
 
-.my-footer{
-    position: fixed;
-	height: 50px;
-	width: 100%;
-	background-color: #47B39D;
-	color: white;
-  	text-align: center;
-  	font-size: 30px;
-  	bottom: 0;
+th {
+	border: solid thin;
 }
 
-.my-center{
-  	text-align: center;
+td {
+	border: solid thin;
 }
-
