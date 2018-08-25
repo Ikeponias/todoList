@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,6 +39,7 @@ public class TodoController {
 	@RequestMapping(value = RoutingURL.SHOW + "/{id}", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
+
 		model.addAttribute("todo", todo);
 		model.addAttribute("children_todo", todo.getChildren());
 		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
@@ -74,10 +76,14 @@ public class TodoController {
 	}
 
 	@RequestMapping(value = RoutingURL.UPDATE + "/{id}", method = RequestMethod.PUT)
-	public String update(@PathVariable("id") Long id) {
+	public String update(@ModelAttribute Todo todoForm, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
-		todo.switchDone();
-		todoService.save(todo);
+
+		if(todo.getVersion() != todoForm.getVersion()){
+            throw new ObjectOptimisticLockingFailureException(Todo.class, todoForm.getId());
+        }
+
+		todoService.save(todoForm);
 
 		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}

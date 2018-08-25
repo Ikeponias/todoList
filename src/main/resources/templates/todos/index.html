@@ -11,17 +11,22 @@
 			<th>ID</th>
 			<th>TODO</th>
 			<th>DONE?</th>
+			<th>VERSION</th>
 			<th>削除</th>
 		</tr>
 		<tr th:each="todo:${todos}">
 			<td>
 				<form th:action="|${link_to_update}/${todo.id}|" th:method="put" th:object="${todo}">
+					<input type="hidden" name="task" th:value="*{task}" />
+					<input type="hidden" name="version" th:value="*{version}" />
+					<input type="hidden" name="done" th:value="not *{done}" />
 					<input type="submit" class="checkbox-submit" value="DONE!" />
 				</form>
 			</td>
 			<td th:text="${todo.id}">ID</td>
 			<td><a th:href="|${link_to_show}/${todo.id}|" th:text="${todo.task}">TODO</a></td>
 			<td th:text="${todo.done}">DONE?</td>
+			<td th:text="${todo.version}">VERSION</td>
 			<td><form th:action="|${link_to_destroy}/${todo.id}|" th:method="delete">
                 <input type="submit" value="削除" /></form></td>
 		</tr>
