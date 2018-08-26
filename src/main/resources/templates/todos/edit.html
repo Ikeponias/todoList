@@ -1,15 +1,18 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: base_header('Todo Show')">
+<head th:replace="layout :: base_header('Todo Edit')">
 </head>
 <body>
 	<div th:replace="layout::header"></div>
-	<h1>Todo:Show</h1>
-	<div class="my-center" th:object="${todo}">
+	<h1>Todo:Edit</h1>
+	<form action="#" th:action="|${link_to_update}/${todoForm.id}|" th:object="${todoForm}"
+		th:method="put">
 		<div th:text="|ID:*{id}|">ID</div>
-		<div th:text="|TASK:*{task}|">TASK</div>
+		<div>Name: <input type="text" th:field="*{task}" th:value="*{task}" /></div>
 		<div th:text="|DONE?:*{done}|">DONE?</div>
-	</div>
+		<input type="hidden" name="version" th:value="*{version}" />
+		<div><input type="submit" value="Submit" /></div>
+	</form>
 	<h2 class="my-center">Child TASK</h2>
 	<table class="my-center">
 		<tr>
@@ -35,8 +38,8 @@
                 <input type="submit" value="delete" /></form></td>
 		</tr>
 	</table>
-	<div th:if="not ${todo.parent}">
-		<a th:href="|${link_to_child_new}/${todo.id}|">New Child Task</a>
+	<div th:if="not ${todoForm.parent}">
+		<a th:href="|${link_to_child_new}/${todoForm.id}|">New Child Task</a>
 	</div>
 	<div th:replace="layout::footer"></div>
 </body>
