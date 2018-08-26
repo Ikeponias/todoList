@@ -1,14 +1,14 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: base_header('Todo New')">
+<head th:replace="layout :: base_header('Place Edit')">
 </head>
 <body>
 	<div th:replace="layout::header"></div>
-	<h1>Todos:New</h1>
-	<form action="#" th:action="|${link_to_create}|" th:object="${todoForm}"
-		method="post">
+	<h1>Place:Edit</h1>
+	<form action="#" th:action="|${link_to_update}/${placeForm.id}|" th:object="${placeForm}"
+		th:method="put">
 		<div>
-			Task: <input type="text" th:field="*{task}" />
+			Name: <input type="text" th:field="*{name}" th:value="*{name}" />
 		</div>
 		<div>
 			<input type="submit" value="Submit" />

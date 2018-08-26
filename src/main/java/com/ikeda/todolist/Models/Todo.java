@@ -51,8 +51,4 @@ public class Todo {
 	@JsonIgnore
 	@Version
 	private int version;
-
-	public void switchDone() {
-		done = !done;
-	}
 }
