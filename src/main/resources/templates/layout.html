@@ -7,7 +7,7 @@
 <script type="text/javascript" th:src="@{/javascript/base.js}"></script>
 </head>
 <header th:fragment="header" class="my-header">
-	<div>TodoList Header</div>
+	<div><a th:href="${link_to_index==null}? '/todos' : ${link_to_index}">TodoList Header</a></div>
 </header>
 <footer th:fragment="footer" class="my-footer">
 	<div>TodoList Footer</div>

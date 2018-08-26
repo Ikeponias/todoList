@@ -42,6 +42,7 @@ public class TodoController {
 
 		model.addAttribute("todo", todo);
 		model.addAttribute("children_todo", todo.getChildren());
+		model.addAttribute("link_to_child_show", RoutingURL.TODOS_SHOW);
 		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
 
 		return "todos/show";

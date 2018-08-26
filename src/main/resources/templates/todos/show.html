@@ -7,33 +7,36 @@
 	<h1>Todo:show</h1>
 	<div class="my-center" th:object="${todo}">
 		<div th:text="|ID:*{id}|">ID</div>
-		<div th:text="|TODO:*{task}|">TODO</div>
+		<div th:text="|TODO:*{task}|">TASK</div>
 		<div th:text="|DONE?:*{done}|">DONE?</div>
 	</div>
-	<h2 class="my-center">子TODO</h2>
+	<h2 class="my-center">Child TASK</h2>
 	<table class="my-center">
 		<tr>
 			<th>check</th>
 			<th>ID</th>
-			<th>TODO</th>
+			<th>TASK</th>
 			<th>DONE?</th>
-			<th>削除</th>
+			<th>DELETE</th>
 		</tr>
-		<tr th:each="todo:${children_todo}">
+		<tr th:each="todo:${children_todo}" th:object="${todo}">
 			<td>
-				<form th:action="|${link_to_update}/${todo.id}|" th:method="put" th:object="${todo}">
+				<form th:action="|${link_to_update}/${todo.id}|" th:method="put">
+					<input type="hidden" name="task" th:value="*{task}" />
+					<input type="hidden" name="version" th:value="*{version}" />
+					<input type="hidden" name="done" th:value="not *{done}" />
 					<input type="submit" class="checkbox-submit" value="DONE!" />
 				</form>
 			</td>
-			<td th:text="${todo.id}">ID</td>
-			<td><a th:href="|${link_to_show}/${todo.id}|" th:text="${todo.task}">TODO</a></td>
-			<td th:text="${todo.done}">DONE?</td>
-			<td><form th:action="|${link_to_destroy}/${todo.id}|" th:method="delete">
-                <input type="submit" value="削除" /></form></td>
+			<td th:text="*{id}">ID</td>
+			<td><a th:href="|${link_to_child_show}/*{id}|" th:text="*{task}">TASK</a></td>
+			<td th:text="*{done}">DONE?</td>
+			<td><form th:action="|${link_to_destroy}/*{id}|" th:method="delete">
+                <input type="submit" value="delete" /></form></td>
 		</tr>
 	</table>
-	<div>
-		<a th:href="|${link_to_child_new}/${todo.id}|">子TODO新規作成</a>
+	<div th:if="not ${todo.parent}">
+		<a th:href="|${link_to_child_new}/${todo.id}|">New Child Task</a>
 	</div>
 	<div th:replace="layout::footer"></div>
 </body>
