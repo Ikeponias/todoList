@@ -28,25 +28,13 @@ public class TodoController {
 	public String index(Model model) {
 		List<Todo> todos = todoService.findAll();
 		model.addAttribute("todos", todos);
-		model.addAttribute("link_to_show", RoutingURL.TODOS_SHOW);
+		model.addAttribute("link_to_edit", RoutingURL.TODOS_EDIT);
 		model.addAttribute("link_to_new", RoutingURL.TODOS_NEW);
 		model.addAttribute("link_to_update", RoutingURL.TODOS_OPTIMISM_UPDATE);
 		model.addAttribute("link_to_destroy", RoutingURL.TODOS_DESTROY);
 		model.addAttribute("link_to_place", RoutingURL.PLACES_INDEX);
 
 		return "todos/index";
-	}
-
-	@RequestMapping(value = RoutingURL.SHOW + "/{id}", method = RequestMethod.GET)
-	public String show(Model model, @PathVariable("id") Long id) {
-		Todo todo = todoService.find(id).get();
-
-		model.addAttribute("todo", todo);
-		model.addAttribute("children_todo", todo.getChildren());
-		model.addAttribute("link_to_child_show", RoutingURL.TODOS_SHOW);
-		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
-
-		return "todos/show";
 	}
 
 	@RequestMapping(value = { RoutingURL.NEW, RoutingURL.NEW + "/{parent_id}" }, method = RequestMethod.GET)
@@ -77,6 +65,19 @@ public class TodoController {
 		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}
 
+
+	@RequestMapping(value = RoutingURL.EDIT + "/{id}", method = RequestMethod.GET)
+	public String edit(Model model, @PathVariable("id") Long id) {
+		Todo todo = todoService.find(id).get();
+		
+		model.addAttribute("todoForm", todo);
+		model.addAttribute("children_todo", todo.getChildren());
+		model.addAttribute("link_to_update", RoutingURL.TODOS_OPTIMISM_UPDATE);
+		model.addAttribute("link_to_child_new", RoutingURL.TODOS_NEW);
+
+		return "todos/edit";
+	}
+	
 	@RequestMapping(value = RoutingURL.OPTIMISM_UPDATE + "/{id}", method = RequestMethod.PUT)
 	public String optimismUpdate(@ModelAttribute Todo todoForm, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();

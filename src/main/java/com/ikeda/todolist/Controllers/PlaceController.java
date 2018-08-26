@@ -36,17 +36,6 @@ public class PlaceController {
 		return "places/index";
 	}
 
-	@RequestMapping(value = RoutingURL.SHOW + "/{id}", method = RequestMethod.GET)
-	public String show(Model model, @PathVariable("id") Long id) {
-		Place place = placeService.find(id).get();
-
-		model.addAttribute("place", place);
-		model.addAttribute("link_to_child_show", RoutingURL.PLACES_SHOW);
-		model.addAttribute("link_to_child_new", RoutingURL.PLACES_NEW);
-
-		return "places/show";
-	}
-
 	@RequestMapping(value = { RoutingURL.NEW, RoutingURL.NEW + "/{parent_id}" }, method = RequestMethod.GET)
 	public String newPlace(Model model, @PathVariable(name = "parent_id", required = false) Optional<Long> parent_id) {
 		Place place = new Place();

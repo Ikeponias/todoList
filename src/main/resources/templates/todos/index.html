@@ -24,7 +24,7 @@
 				</form>
 			</td>
 			<td th:text="*{id}">ID</td>
-			<td><a th:href="|${link_to_show}/*{id}|" th:text="*{task}">TASK</a></td>
+			<td><a th:href="|${link_to_edit}/*{id}|" th:text="*{task}">TASK</a></td>
 			<td th:text="*{done}">DONE?</td>
 			<td th:text="*{version}">VERSION</td>
 			<td><form th:action="|${link_to_destroy}/*{id}|" th:method="delete">
