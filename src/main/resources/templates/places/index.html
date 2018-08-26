@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: base_header('Todo Index')">
+</head>
+<body>
+	<div th:replace="layout::header"></div>
+	<h1>Place:Index</h1>
+	<table class="my-center">
+		<tr th:each="place:${places}" th:object="${place}">
+			<td th:text="*{id}">ID</td>
+			<td><a th:href="|${link_to_edit}/*{id}|" th:text="*{name}">NAME</a></td>
+			<td><form th:action="|${link_to_destroy}/*{id}|" th:method="delete">
+                <input type="submit" value="delete" /></form></td>
+		</tr>
+	</table>
+	<div><a th:href="${link_to_new}">NEW PLACE</a></div>
+	<div th:replace="layout::footer"></div>
+</body>
+</html>

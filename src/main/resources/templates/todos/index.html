@@ -20,7 +20,7 @@
 					<input type="hidden" name="task" th:value="*{task}" />
 					<input type="hidden" name="version" th:value="*{version}" />
 					<input type="hidden" name="done" th:value="not *{done}" />
-					<input type="submit" class="checkbox-submit" value="DONE!" />
+					<input type="submit" value="DONE!" />
 				</form>
 			</td>
 			<td th:text="*{id}">ID</td>
@@ -32,6 +32,7 @@
 		</tr>
 	</table>
 	<div><a th:href="${link_to_new}">NEW TASK</a></div>
+	<div><a th:href="${link_to_place}">GOTO PLACE</a></div>
 	<div th:replace="layout::footer"></div>
 </body>
 </html>

@@ -30,8 +30,9 @@ public class TodoController {
 		model.addAttribute("todos", todos);
 		model.addAttribute("link_to_show", RoutingURL.TODOS_SHOW);
 		model.addAttribute("link_to_new", RoutingURL.TODOS_NEW);
-		model.addAttribute("link_to_update", RoutingURL.TODOS_UPDATE);
+		model.addAttribute("link_to_update", RoutingURL.TODOS_OPTIMISM_UPDATE);
 		model.addAttribute("link_to_destroy", RoutingURL.TODOS_DESTROY);
+		model.addAttribute("link_to_place", RoutingURL.PLACES_INDEX);
 
 		return "todos/index";
 	}
@@ -76,8 +77,8 @@ public class TodoController {
 		return "redirect:" + RoutingURL.TODOS_INDEX;
 	}
 
-	@RequestMapping(value = RoutingURL.UPDATE + "/{id}", method = RequestMethod.PUT)
-	public String update(@ModelAttribute Todo todoForm, @PathVariable("id") Long id) {
+	@RequestMapping(value = RoutingURL.OPTIMISM_UPDATE + "/{id}", method = RequestMethod.PUT)
+	public String optimismUpdate(@ModelAttribute Todo todoForm, @PathVariable("id") Long id) {
 		Todo todo = todoService.find(id).get();
 
 		if(todo.getVersion() != todoForm.getVersion()){

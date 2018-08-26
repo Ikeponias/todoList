@@ -1,13 +1,13 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: base_header('Todo New')">
+<head th:replace="layout :: base_header('Todo Show')">
 </head>
 <body>
 	<div th:replace="layout::header"></div>
-	<h1>Todo:show</h1>
+	<h1>Todo:Show</h1>
 	<div class="my-center" th:object="${todo}">
 		<div th:text="|ID:*{id}|">ID</div>
-		<div th:text="|TODO:*{task}|">TASK</div>
+		<div th:text="|TASK:*{task}|">TASK</div>
 		<div th:text="|DONE?:*{done}|">DONE?</div>
 	</div>
 	<h2 class="my-center">Child TASK</h2>
