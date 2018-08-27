@@ -60,7 +60,7 @@ public class PlaceController {
 
 	@RequestMapping(value = RoutingURL.EDIT + "/{id}", method = RequestMethod.GET)
 	public String edit(Model model, @PathVariable("id") Long id) {
-		Place place = placeService.findForUpdate(id);
+		Place place = placeService.find(id).get();
 
 		model.addAttribute("placeForm", place);
 		model.addAttribute("link_to_update", RoutingURL.PLACES_PESSIMISM_UPDATE);
